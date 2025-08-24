@@ -1,0 +1,93 @@
+:root{
+  --bg:#000000;
+  --fg:#9aff9a;
+  --fg-dim:#6ddf6d;
+  --btn-bg:#001b00;
+  --btn-bd:#26ff72;
+  --btn-fg:#b5ffce;
+  --btn-fg-hover:#0a0;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+
+/* Escopo do tema da Home para evitar conflitos */
+body.pip-home{
+  background:var(--bg);
+  color:var(--fg);
+  font:16px/1.4 ui-monospace, SFMono-Regular, Menlo, Monaco, "Courier New", monospace;
+  display:flex;align-items:center;justify-content:center;
+  overflow:hidden;
+}
+
+.pip-home .wrapper{width:min(820px,95vw); padding:16px}
+
+/* LOGO / TÍTULO */
+.pip-home .logo{ 
+  color:var(--fg); 
+  text-shadow:0 0 6px var(--fg),0 0 20px var(--fg); 
+  margin-bottom:24px; 
+  letter-spacing:.04em; 
+  text-align:center;
+}
+
+.pip-home .title{
+  margin: 6px 0 8px;
+  font-family:"Comic Sans MS","Comic Sans","Comic Neue",system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+  font-size: clamp(33px, 9vw, 90px); /* 25% menor que a versão anterior */
+  font-weight: 700;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: var(--fg);
+  line-height: .95;
+  text-shadow: 0 0 6px var(--fg), 0 0 24px rgba(154,255,154,.45), 0 0 42px rgba(154,255,154,.25);
+}
+
+.pip-home .tag{
+  font-size:12px; 
+  color:var(--fg-dim); 
+  margin-top:8px; 
+  opacity:.92;
+}
+
+/* MENU */
+.pip-home .menu{ display:flex; flex-direction:column; gap:14px; }
+.pip-home .btn{
+  padding:14px 20px; border:2px solid var(--btn-bd);
+  background:var(--btn-bg);
+  color:var(--btn-fg);
+  text-transform:uppercase; letter-spacing:.08em; font-weight:700;
+  cursor:pointer; border-radius:8px;
+  box-shadow:0 0 0 2px rgba(38,255,114,.08) inset, 0 0 14px rgba(38,255,114,.18);
+  transition:transform .08s ease, box-shadow .15s ease, color .15s ease, background .15s ease;
+  font-size:clamp(12px, 3.4vw, 16px);
+}
+.pip-home .btn:hover{
+  transform:translateY(-1px);
+  box-shadow:0 0 0 2px rgba(38,255,114,.18) inset, 0 0 18px rgba(38,255,114,.35);
+  color:var(--btn-fg-hover);
+  background:#001400;
+}
+.pip-home .btn:disabled{ opacity:.55; cursor:not-allowed }
+
+/* SCANLINES */
+.pip-home .scan{ 
+  position:fixed; inset:0; pointer-events:none; 
+  background:repeating-linear-gradient(to bottom, rgba(0,0,0,0) 0 2px, rgba(0,255,100,.05) 2px 3px); 
+  mix-blend-mode:screen; opacity:.5; 
+  animation:roll 8s linear infinite; 
+}
+@keyframes roll{from{background-position-y:0}to{background-position-y:300px}}
+
+.pip-home .blink::after{ content:"_"; margin-left:6px; animation:blink 1s steps(1,end) infinite; }
+@keyframes blink{50%{opacity:0}}
+
+/* FOOTER/INFO */
+.pip-home .foot{ margin-top:16px; font-size:12px; color:#77d97a; opacity:.9; text-align:center }
+
+/* MOBILE */
+@media (max-width:420px){
+  .pip-home .wrapper{padding:12px}
+  .pip-home .menu{gap:12px}
+}
+

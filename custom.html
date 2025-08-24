@@ -1,1 +1,77 @@
-<!DOCTYPE html><html lang="pt-br"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Metal Warriors: Combate Custom • PIP-GREEN</title><link rel="stylesheet" href="style.css"></head><body class="custom-page"><main class="custom-wrap"><h1 class="custom-title">Configurar Combate</h1><section class="section"><h2>Escolha <strong>sua</strong> arma</h2><div class="grid" id="playerGrid"><button class="menu-btn weapon-btn" data-weapon="Sniper">Sniper</button> <button class="menu-btn weapon-btn" data-weapon="Fuzil">Fuzil</button> <button class="menu-btn weapon-btn" data-weapon="Metralhadora">Metralhadora</button> <button class="menu-btn weapon-btn" data-weapon="Espada">Espada</button></div></section><section class="section"><h2>Escolha a arma do <strong>inimigo (IA)</strong></h2><div class="grid" id="enemyGrid"><button class="menu-btn weapon-btn" data-weapon="Sniper">Sniper</button> <button class="menu-btn weapon-btn" data-weapon="Fuzil">Fuzil</button> <button class="menu-btn weapon-btn" data-weapon="Metralhadora">Metralhadora</button> <button class="menu-btn weapon-btn" data-weapon="Espada">Espada</button></div></section><div class="footer-actions"><button id="startBtn" class="start-btn disabled">INICIAR COMBATE</button></div><p class="hint">Selecione as duas armas para liberar o início.</p></main><script>!function(){const e=document.getElementById("playerGrid"),t=document.getElementById("enemyGrid"),n=document.getElementById("startBtn");let s=null,l=null;function o(e,t){e.addEventListener("click",o=>{const a=o.target.closest(".weapon-btn");if(!a)return;e.querySelectorAll(".weapon-btn").forEach(e=>e.classList.remove("selected")),a.classList.add("selected");const c=a.getAttribute("data-weapon");"player"===t?s=c:l=c,function(){const e=!(!s||!l);n.classList.toggle("disabled",!e)}()})}n.addEventListener("click",()=>{n.classList.contains("disabled")||(sessionStorage.setItem("customPlayerWeapon",s),sessionStorage.setItem("customEnemyWeapon",l),location.href="index.html")}),o(e,"player"),o(t,"enemy")}()</script></body></html>
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Metal Warriors: Combate Custom • PIP-GREEN</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body class="custom-page">
+  <main class="custom-wrap">
+    <h1 class="custom-title">Configurar Combate</h1>
+
+    <section class="section">
+      <h2>Escolha <strong>sua</strong> arma</h2>
+      <div class="grid" id="playerGrid">
+        <button class="menu-btn weapon-btn" data-weapon="Sniper">Sniper</button>
+        <button class="menu-btn weapon-btn" data-weapon="Fuzil">Fuzil</button>
+        <button class="menu-btn weapon-btn" data-weapon="Metralhadora">Metralhadora</button>
+        <button class="menu-btn weapon-btn" data-weapon="Espada">Espada</button>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Escolha a arma do <strong>inimigo (IA)</strong></h2>
+      <div class="grid" id="enemyGrid">
+        <button class="menu-btn weapon-btn" data-weapon="Sniper">Sniper</button>
+        <button class="menu-btn weapon-btn" data-weapon="Fuzil">Fuzil</button>
+        <button class="menu-btn weapon-btn" data-weapon="Metralhadora">Metralhadora</button>
+        <button class="menu-btn weapon-btn" data-weapon="Espada">Espada</button>
+      </div>
+    </section>
+
+    <div class="footer-actions">
+      <button id="startBtn" class="start-btn disabled">INICIAR COMBATE</button>
+    </div>
+    <p class="hint">Selecione as duas armas para liberar o início.</p>
+  </main>
+
+  <script>
+    (function(){
+      const playerGrid = document.getElementById('playerGrid');
+      const enemyGrid  = document.getElementById('enemyGrid');
+      const startBtn   = document.getElementById('startBtn');
+
+      let chosenPlayer = null;
+      let chosenEnemy  = null;
+
+      function handleSelect(gridEl, who){
+        gridEl.addEventListener('click', (ev)=>{
+          const btn = ev.target.closest('.weapon-btn');
+          if(!btn) return;
+          gridEl.querySelectorAll('.weapon-btn').forEach(b=>b.classList.remove('selected'));
+          btn.classList.add('selected');
+          const weapon = btn.getAttribute('data-weapon');
+          if(who === 'player') chosenPlayer = weapon; else chosenEnemy = weapon;
+          updateStart();
+        });
+      }
+
+      function updateStart(){
+        const ok = !!(chosenPlayer && chosenEnemy);
+        startBtn.classList.toggle('disabled', !ok);
+      }
+
+      startBtn.addEventListener('click', ()=>{
+        if(startBtn.classList.contains('disabled')) return;
+        sessionStorage.setItem('customPlayerWeapon', chosenPlayer);
+        sessionStorage.setItem('customEnemyWeapon',  chosenEnemy);
+        location.href = 'combat.html';
+      });
+
+      handleSelect(playerGrid, 'player');
+      handleSelect(enemyGrid,  'enemy');
+    })();
+  </script>
+</body>
+</html>
